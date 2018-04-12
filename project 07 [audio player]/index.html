@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>My Audio Player</title>
+  <style>
+    /*滚动条 start*/
+
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 4px;
+      background-color: #F5F5F5;
+    }
+
+    /*定义滚动条轨道 内阴影+圆角*/
+
+    ::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+      background: #fff;
+    }
+
+    /*定义滑块 内阴影+圆角*/
+
+    ::-webkit-scrollbar-thumb {
+      border-radius: 3px;
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+      background-color: rgba(146, 159, 165, 0.3);
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      border-radius: 3px;
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+      background-color: rgba(146, 159, 165, 1);
+    }
+  </style>
+
+  <style>
+    @font-face {
+      font-family: myfont0;
+      src: url('static/font/QQMusicUI.ttf');
+    }
+
+    html,
+    body {
+      margin: 0px;
+      padding: 0px;
+      width: 100%;
+      height: 100%;
+      font-family: Arial, Helvetica, sans-serif;
+      background: lightblue;
+    }
+
+    #wrapper {
+      width: 1000px;
+      height: 600px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-left: -500px;
+      margin-top: -300px;
+      border: 5px gray solid;
+      background: url('static/imgs/bg.jpg') no-repeat;
+      background-size: cover;
+    }
+
+    main {
+      width: 100%;
+      height: 100%;
+      display: flex;
+    }
+
+    aside {
+      width: 250px;
+      height: 100%;
+      border-right: solid 2px white;
+    }
+
+    #user-icon {
+      width: 100%;
+      height: 150px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    #avater {
+      width: 60px;
+      height: 60px;
+    }
+
+    #avater img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: lightcyan solid 4px;
+    }
+
+    nav {
+      max-height: 450px;
+      background: rgba(16, 30, 53, 0.3);
+      color: white;
+    }
+
+    article {
+      width: 750px;
+      height: 100%;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0px;
+      text-align: center;
+      margin: 0px;
+      max-height: 290px;
+    }
+
+    ul:hover li.cate {
+      cursor: pointer;
+    }
+
+    ul li.cate {
+      height: 48px;
+      margin: 0px;
+      line-height: 50px;
+      border-top: solid 1px black;
+      border-bottom: solid 1px black;
+    }
+
+    .sub-ul {
+      display: none;
+      padding: 0px;
+    }
+
+    .sub-ul li {
+      font-size: 12px;
+      border-top: solid 1px grey;
+      border-bottom: solid 1px grey;
+      height: 35px;
+      line-height: 35px;
+      padding-left: 5px;
+      overflow: hidden;
+    }
+
+    .sub-ul li:hover {
+      cursor: pointer;
+    }
+
+    footer {
+      height: 59px;
+      width: 100%;
+      position: absolute;
+      bottom: 0px;
+      background: rgba(1, 95, 107, 0.5);
+      border-top: solid black 1px;
+      display: flex;
+    }
+
+    .focus {
+      height: 290px;
+      max-height: 290px;
+      position: relative;
+      background: rgba(198, 136, 136, 0.1);
+    }
+
+    .focus ul {
+      height: 240px;
+      max-height: 240px;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      position: absolute;
+      top: 50px;
+      display: block;
+      text-align: left;
+      width: 100%;
+    }
+
+    .focus ul li {
+      width: 100%;
+      transition: all 0.25s ease 0s;
+    }
+
+    .focus ul li.on {
+      background: rgba(230, 231, 234, 0.5);
+      height: 60px;
+      line-height: 60px;
+      transition: all 0.25s ease 0s;
+    }
+
+    #info {
+      height: 180px;
+      width: 100%;
+      display: flex;
+    }
+
+    #info #pic {
+      width: 250px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+    }
+
+    #info #pic img {
+      width: 150px;
+      height: 150px;
+      background: burlywood;
+    }
+
+    #info #message {
+      width: 500px;
+    }
+
+    #info #message p {
+      padding-left: 0px;
+      margin: 20px 0;
+      height: 25px;
+      line-height: 25px;
+      color: white;
+    }
+
+    #info #message p#name {
+      margin-top: 35px;
+      font-size: 25px;
+    }
+
+    #info #message p#author {
+      margin-top: 30px;
+      margin-bottom: 15px;
+    }
+
+    #info #message p#length {
+      margin-top: 15px;
+    }
+
+    #lyric {
+      height: 360px;
+      background: rgba(16, 30, 53, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+    }
+
+    #lyric #screen {
+      width: 80%;
+      height: 288px;
+      font-size: 24px;
+      color: white;
+      line-height: 288px;
+      text-align: center;
+    }
+
+    #buttons {
+      width: 200px;
+      height: 100%;
+      margin: 0 25px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+    }
+
+    #buttons div,
+    #loop {
+      width: 25px;
+      height: 25px;
+    }
+
+    #buttons div.layout {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+    }
+
+    #buttons div.layout:hover {
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    #buttons div img,
+    #loop img {
+      width: 100%;
+      height: 100%;
+    }
+
+    #slider {
+      width: 450px;
+      margin-left: 20px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    #slider #cur,
+    #slider #length {
+      width: 40px;
+      font-size: 14px;
+      text-align: center;
+      color: white;
+    }
+
+    #slider #bar {
+      width: 350px;
+      height: 3px;
+      border-radius: 1.5px;
+      position: relative;
+      height: 6px;
+      display: flex;
+      align-items: center;
+    }
+
+    #slider #bar:hover {
+      cursor: pointer;
+    }
+
+    #slider #bar #now {
+      position: absolute;
+      height: 6px;
+      background-color: grey;
+      border-radius: 3px;
+    }
+
+    #slider #bar #all {
+      width: 350px;
+      height: 6px;
+      border-radius: 3px;
+      background: white;
+    }
+
+    #slider #bar #tag {
+      position: absolute;
+      height: 10px;
+      width: 10px;
+      top: 50%;
+      left: 0px;
+      margin-top: -5px;
+      margin-left: -5px;
+      border-radius: 50%;
+      background: red;
+    }
+
+    #slider #bar #tag:hover {
+      cursor: pointer;
+    }
+
+    #volume {
+      width: 190px;
+      margin-left: 10px;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+
+    #volume #bar2 {
+      width: 130px;
+      margin-left: 20px;
+      position: relative;
+      height: 6px;
+      display: flex;
+      align-items: center;
+    }
+
+    #volume #bar2:hover {
+      cursor: pointer;
+    }
+
+    #volume-icon {
+      width: 35px;
+      height: 35px;
+    }
+
+    #volume-icon img {
+      width: 35px;
+      height: 35px;
+    }
+
+    #volume-now {
+      position: absolute;
+      width: 130px;
+      height: 6px;
+      border-radius: 3px;
+      background-color: grey;
+    }
+
+    #volume-all {
+      width: 130px;
+      height: 6px;
+      border-radius: 3px;
+      background: white;
+    }
+
+    #volume-tag {
+      position: absolute;
+      height: 10px;
+      width: 10px;
+      top: 50%;
+      left: 130px;
+      margin-top: -5px;
+      margin-left: -5px;
+      border-radius: 50%;
+      background: red;
+    }
+
+    #function {
+      display: flex;
+      align-items: center;
+      margin-left: 25px;
+    }
+
+    #function div.layout {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+    }
+
+    #function div.layout:hover {
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.3);
+    }
+  </style>
+</head>
+
+<body>
+  <div id="wrapper">
+    <main>
+      <aside>
+        <div id="user-icon">
+          <div id="avater">
+            <img src="static/imgs/bio.jpg" alt="my-avater">
+          </div>
+        </div>
+        <nav>
+          <ul class="column focus" id="playlist">
+            <li class="cate">播放列表</li>
+            <ul class="sub-ul"></ul>
+          </ul>
+          <ul class="column" id="favorite">
+            <li class="cate">我喜欢</li>
+            <ul class="sub-ul"></ul>
+          </ul>
+          <ul class="column" id="recent">
+            <li class="cate">最近播放</li>
+            <ul class="sub-ul">
+              <li class="item">目前本功能不可用</li>
+            </ul>
+          </ul>
+        </nav>
+      </aside>
+      <article>
+        <section id="info">
+          <div id="pic">
+            <img src="" alt="">
+          </div>
+          <div id="message">
+            <p id="name">123</p>
+            <p id='author'>45678</p>
+            <p id="length">78902</p>
+          </div>
+        </section>
+        <section id="lyric">
+          <div id="screen">目前滚动字幕功能不可用</div>
+        </section>
+      </article>
+    </main>
+    <footer>
+      <audio id='myAudio' controls='controls' style='display:none;'>
+        <source src="static/songs/song0.mp3" type="audio/mepg"> 您的浏览器不支持audio元素
+      </audio>
+      <div id="buttons">
+        <div class="layout">
+          <div id="prev">
+            <img src="static/imgs/prev.png" alt="">
+          </div>
+        </div>
+        <div class="layout">
+          <div id="play">
+            <img src="static/imgs/stop.png" alt="">
+          </div>
+        </div>
+        <div class="layout">
+          <div id="next">
+            <img src="static/imgs/next.png" alt="">
+          </div>
+        </div>
+      </div>
+      <div id="slider">
+        <div id="cur">00:00</div>
+        <div id="bar">
+          <div id="now"></div>
+          <div id="all"></div>
+          <div id="tag"></div>
+        </div>
+        <div id="length">00:00</div>
+      </div>
+      <div id="volume">
+        <div id="volume-icon">
+          <img src="static/imgs/volume.png" alt="">
+        </div>
+        <div id="bar2">
+          <div id="volume-now"></div>
+          <div id="volume-all"></div>
+          <div id="volume-tag"></div>
+        </div>
+      </div>
+      <div id="function">
+        <div class="layout">
+          <div id="loop">
+            <img src="static/imgs/line.png" alt="">
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+  <script src="js/config.js"></script>
+  <script>
+    window.onload = function () {
+      document.onselectstart = function () { return false; }
+      var index = 0;
+      var listType = 1;
+      var recent = []; // 最近播放列表
+      var isloop = 0;
+      var playtag = 0;
+      var timer = null;
+      var onav = document.querySelector('nav');
+      var lis = document.getElementsByTagName('li');
+      var odefaultlist = document.getElementById('playlist');
+      var ofavorite = document.getElementById('favorite');
+      var orecent = document.getElementById('recent');
+      var info = document.querySelector('#info');
+      var btns = document.querySelector('#buttons');
+      var slider = document.querySelector('#slider');
+      var volume = document.querySelector('#volume');
+      var myAudio = document.getElementById('myAudio');
+      var onow = document.getElementById('now');
+      var otag = document.getElementById('tag');
+      var oloop = document.getElementById('loop');
+      var oplaylist = odefaultlist;
+      var currentList = playList;
+      var drag = 0; // 拖动标记
+      var volumedrag = 0;
+
+      onav.addEventListener('click', function (event) {
+        var target = event.target;
+        if (target.tagName === 'LI') {
+          if (target.className === 'cate') {
+            var bros = target.parentNode.parentNode.childNodes;
+            for (var i = 0; i < bros.length; i++) {
+              if (bros[i].tagName === 'UL') {
+                bros[i].classList.remove('focus');
+              }
+            }
+            target.parentNode.classList.add('focus');
+          }
+          else {
+            var bros = target.parentNode.parentNode.parentNode.childNodes;
+            switch (target.parentNode.parentNode.id) {
+              case 'playlist':
+                listType = 1;
+                oplaylist = odefaultlist;
+                currentList = playList;
+                break;
+              case 'favorite':
+                listType = 2;
+                oplaylist = ofavorite;
+                currentList = favorite;
+                break;
+              case 'recent':
+                listType = 3;
+                oplaylist = orecent;
+                currentList = current;
+                break;
+            };
+            index = target.value;
+            for (var i = 0; i < bros.length; i++) {
+              if (bros[i].tagName === 'UL') {
+                bros[i].classList.remove('focus');
+              }
+            }
+            target.parentNode.parentNode.classList.add('focus');
+            for (var i = 0; i < lis.length; i++) {
+              lis[i].classList.remove('on');
+            }
+            target.classList.add('on');
+            /* 可简化 */
+            slider.querySelector('#cur').innerHTML = '00:00';
+            index = target.value;
+            info.querySelector('#pic img').src = currentList[index]['pic'];
+            info.querySelector('#message #name').innerHTML = currentList[index]['name'];
+            info.querySelector('#message #author').innerHTML = currentList[index]['author'];
+            info.querySelector('#message #length').innerHTML = currentList[index]['length'];
+            slider.querySelector('#length').innerHTML = currentList[index]['length'];
+            myAudio.src = currentList[index]['src'];
+            playtag = 1;
+            otag.style.transition = 'none';
+            onow.style.transition = 'none';
+            onow.style.width = '0px';
+            otag.style.left = '0px';
+            slider.querySelector('#cur').innerHTML = '00:00';
+            clearInterval(timer);
+            myAudio.play();
+            btns.querySelector('#play img').src = 'static/imgs/play.png';
+            count();
+            /* 可简化 */
+          }
+        }
+      })
+
+      /* 初始化，生成列表 */
+      function init() {
+        /* 生成播放列表 */
+        for (var i = 0; i < currentList.length; i++) {
+          var ali = document.createElement('li');
+          var atext = document.createTextNode(currentList[i]['name']);
+          ali.appendChild(atext);
+          ali.classList.add('item');
+          ali.value = i;
+          oplaylist.childNodes[3].appendChild(ali);
+        }
+        /* 生成我喜欢列表 */
+        for (var i = 0; i < favorite.length; i++) {
+          var ali = document.createElement('li');
+          var atext = document.createTextNode(favorite[i]['name']);
+          ali.appendChild(atext);
+          ali.classList.add('item');
+          ali.value = i;
+          ofavorite.childNodes[3].appendChild(ali);
+        }
+        /* 信息栏初始化 */
+        info.querySelector('#pic img').src = currentList[index]['pic'];
+        info.querySelector('#message #name').innerHTML = currentList[index]['name'];
+        info.querySelector('#message #author').innerHTML = currentList[index]['author'];
+        info.querySelector('#message #length').innerHTML = currentList[index]['length'];
+        /* 初始化播放器 */
+        myAudio.src = currentList[index]['src'];
+        myAudio.preload = true;
+        slider.querySelector('#length').innerHTML = currentList[index]['length'];
+        console.log('初始化完成');
+      }
+      init();
+
+      /* 实时更新 */
+      var count = function () {
+        timer = setInterval(function () {
+          if (Math.round(myAudio.currentTime) < 60) {
+            if (Math.round(myAudio.currentTime) < 10) {
+              var now = '00:0' + Math.round(myAudio.currentTime);
+            }
+            else {
+              var now = '00:' + Math.round(myAudio.currentTime);
+            }
+          }
+          else {
+            if (Math.round(myAudio.currentTime) % 60 < 10) {
+              var now = '0' + parseInt(Math.round(myAudio.currentTime) / 60) + ':0' + Math.round(myAudio.currentTime) % 60;
+            }
+            else {
+              var now = '0' + parseInt(Math.round(myAudio.currentTime) / 60) + ':' + Math.round(myAudio.currentTime) % 60;
+            }
+          }
+          slider.querySelector('#cur').innerHTML = now;
+          if (myAudio.currentTime <= currentList[index]['totalseconds']) {
+            onow.style.width = myAudio.currentTime / currentList[index]['totalseconds'] * 350 + 'px';
+            onow.style.transition = 'all 1s linear 0s';
+            otag.style.left = myAudio.currentTime / currentList[index]['totalseconds'] * 350 + 'px';
+            otag.style.transition = 'all 1s linear 0s';
+          }
+          else {
+            otag.style.transition = 'none';
+            onow.style.transition = 'none';
+            onow.style.width = '0px';
+            otag.style.left = '0px';
+            slider.querySelector('#cur').innerHTML = '00:00';
+          }
+        }, 1000)
+      }
+
+      /* 播放事件 */
+      btns.querySelector('#play').parentNode.onclick = function () {
+        if (playtag == 0) {
+          playtag = 1;
+          oplaylist.childNodes[3].childNodes[index].classList.add('on');
+          myAudio.play();
+          btns.querySelector('#play img').src = 'static/imgs/play.png';
+          count();
+        }
+        else {
+          playtag = 0;
+          myAudio.pause();
+          btns.querySelector('#play img').src = 'static/imgs/stop.png';
+          clearInterval(timer);
+        }
+      }
+
+      /* 上一曲 */
+      btns.querySelector('#prev').parentNode.onclick = function () {
+        oplaylist.childNodes[3].childNodes[index].classList.remove('on');
+        index = (index - 1) < 0 ? oplaylist.childNodes[3].childNodes.length - 1 : index - 1;
+        /* 信息栏更新 */
+        info.querySelector('#pic img').src = currentList[index]['pic'];
+        info.querySelector('#message #name').innerHTML = currentList[index]['name'];
+        info.querySelector('#message #author').innerHTML = currentList[index]['author'];
+        info.querySelector('#message #length').innerHTML = currentList[index]['length'];
+        /* 播放器更新 */
+        myAudio.src = currentList[index]['src'];
+        myAudio.preload = true;
+        slider.querySelector('#length').innerHTML = currentList[index]['length'];
+        slider.querySelector('#cur').innerHTML = '00:00';
+        otag.style.transition = 'none';
+        onow.style.transition = 'none';
+        onow.style.width = '0px';
+        otag.style.left = '0px';
+        clearInterval(timer);
+        oplaylist.childNodes[3].childNodes[index].classList.add('on');
+        myAudio.play();
+        count();
+      }
+
+      /* 下一曲 */
+      btns.querySelector('#next').parentNode.onclick = function () {
+        oplaylist.childNodes[3].childNodes[index].classList.remove('on');
+        index = (index + 1) % oplaylist.childNodes[3].childNodes.length;
+        /* 信息栏更新 */
+        info.querySelector('#pic img').src = currentList[index]['pic'];
+        info.querySelector('#message #name').innerHTML = currentList[index]['name'];
+        info.querySelector('#message #author').innerHTML = currentList[index]['author'];
+        info.querySelector('#message #length').innerHTML = currentList[index]['length'];
+        /* 播放器更新 */
+        myAudio.src = currentList[index]['src'];
+        myAudio.preload = true;
+        slider.querySelector('#length').innerHTML = currentList[index]['length'];
+        otag.style.transition = 'none';
+        onow.style.transition = 'none';
+        onow.style.width = '0px';
+        otag.style.left = '0px';
+        slider.querySelector('#cur').innerHTML = '00:00';
+        clearInterval(timer);
+        oplaylist.childNodes[3].childNodes[index].classList.add('on');
+        myAudio.play();
+        count();
+      }
+
+      /* 循环事件 */
+      oloop.parentNode.onclick = function () {
+        if (isloop === 0) {
+          isloop = 1;
+          oloop.querySelector('img').src = 'static/imgs/loop.png';
+          myAudio.loop = true;
+        }
+        else {
+          isloop = 0;
+          oloop.querySelector('img').src = 'static/imgs/line.png';
+          myAudio.loop = false;
+        }
+      }
+
+      /* 自动连播 */
+      myAudio.addEventListener('ended', function () {
+        /* 可简化 */
+        oplaylist.childNodes[3].childNodes[index].classList.remove('on');
+        index = (index + 1) % oplaylist.childNodes[3].childNodes.length;
+        oplaylist.childNodes[3].childNodes[index].classList.add('on');
+        info.querySelector('#pic img').src = currentList[index]['pic'];
+        info.querySelector('#message #name').innerHTML = currentList[index]['name'];
+        info.querySelector('#message #author').innerHTML = currentList[index]['author'];
+        info.querySelector('#message #length').innerHTML = currentList[index]['length'];
+        slider.querySelector('#length').innerHTML = currentList[index]['length'];
+        myAudio.src = currentList[index]['src'];
+        onow.style.transition = 'none';
+        onow.style.width = myAudio.currentTime / currentList[index]['totalseconds'] * 350 + 'px';
+        otag.style.transition = 'none';
+        otag.style.left = myAudio.currentTime / currentList[index]['totalseconds'] * 350 + 'px';
+        clearInterval(timer);
+        myAudio.play();
+        //btns.querySelector('#play img').src = 'static/imgs/play.png';
+        count();
+        /* 可简化 */
+      });
+
+      /* slider设置 */
+      slider.addEventListener('click', function (event) {
+        if (event.target == slider.querySelector('#now') || event.target == slider.querySelector('#all')) {
+          if (event.offsetX >= 0 || event.offsetX <= 350) {
+            slider.querySelector('#now').style.transition = 'none';
+            slider.querySelector('#now').style.width = event.offsetX + 'px';
+            slider.querySelector('#tag').style.transition = 'none';
+            slider.querySelector('#tag').style.left = event.offsetX + 'px';
+            myAudio.currentTime = parseInt(slider.querySelector('#now').style.width) / 350 * currentList[index]['totalseconds'];
+            if (Math.round(myAudio.currentTime) % 60 < 10) {
+              var now = '0' + parseInt(Math.round(myAudio.currentTime) / 60) + ':0' + Math.round(myAudio.currentTime) % 60;
+            }
+            else {
+              var now = '0' + parseInt(Math.round(myAudio.currentTime) / 60) + ':' + Math.round(myAudio.currentTime) % 60;
+            }
+            slider.querySelector('#cur').innerHTML = now;
+          }
+        }
+      });
+
+      /*
+      slider.querySelector('#tag').addEventListener('mousedown', function () { drag = 1; });
+      document.addEventListener('mouseup', function () { drag = 0; });
+      slider.querySelector('#bar').addEventListener('mousemove', function (event) {
+        if (drag == 1) {  
+          if (event.offestX >= 350) {
+            slider.querySelector('#now').style.transition = 'none';
+            slider.querySelector('#now').style.width = '350px';
+            slider.querySelector('#tag').style.transition = 'none';
+            slider.querySelector('#tag').style.left = '350px';
+          } else if (event.offsetX <= 0) {
+            slider.querySelector('#now').style.transition = 'none';
+            slider.querySelector('#now').style.width = '0px';
+            slider.querySelector('#tag').style.transition = 'none';
+            slider.querySelector('#tag').style.left = '0px';
+          } else {
+            slider.querySelector('#now').style.transition = 'none';
+            slider.querySelector('#now').style.width = event.offsetX + 'px';
+            slider.querySelector('#tag').style.transition = 'none';
+            slider.querySelector('#tag').style.left = event.offsetX + 'px';
+            myAudio.currentTime = parseInt(slider.querySelector('#now').style.width) / 350 * currentList[index]['totalseconds'];
+            if (Math.round(myAudio.currentTime) % 60 < 10) {
+              var now = '0' + parseInt(Math.round(myAudio.currentTime) / 60) + ':0' + Math.round(myAudio.currentTime) % 60;
+            }
+            else {
+              var now = '0' + parseInt(Math.round(myAudio.currentTime) / 60) + ':' + Math.round(myAudio.currentTime) % 60;
+            }
+            slider.querySelector('#cur').innerHTML = now;
+          }
+        }
+      });
+      */
+
+      /* volume设置 */
+      volume.addEventListener('click', function (event) {
+        if (event.target == volume.querySelector('#volume-now') || event.target == volume.querySelector('#volume-all')) {
+          if (event.offsetX >= 0 || event.offsetX <= 130) {
+            volume.querySelector('#volume-now').style.transition = 'none';
+            volume.querySelector('#volume-now').style.width = event.offsetX + 'px';
+            volume.querySelector('#volume-tag').style.transition = 'none';
+            volume.querySelector('#volume-tag').style.left = event.offsetX + 'px';
+            myAudio.volume = parseInt(volume.querySelector('#volume-now').style.width) / 130;
+          }
+        }
+      });
+
+      /*
+      volume.querySelector('#volume-tag').addEventListener('mousedown', function () { volumedrag = 1; });
+      document.addEventListener('mouseup', function () { volumedrag = 0; });
+      volume.addEventListener('mousemove', function (event) {
+        if (volumedrag == 1) {
+          if (event.pageX >= 935) {
+            volume.querySelector('#volume-now').style.transition = 'none';
+            volume.querySelector('#volume-now').style.width = '130px';
+            volume.querySelector('#volume-tag').style.transition = 'none';
+            volume.querySelector('#volume-tag').style.left = '130px';
+          } else if (event.pageX <= 805) {
+            volume.querySelector('#volume-now').style.transition = 'none';
+            volume.querySelector('#volume-now').style.width = '0px';
+            volume.querySelector('#volume-tag').style.transition = 'none';
+            volume.querySelector('#volume-tag').style.left = '0px';
+          } else {
+            volume.querySelector('#volume-now').style.transition = 'none';
+            volume.querySelector('#volume-now').style.width = event.pageX - 805 + 'px';
+            volume.querySelector('#volume-tag').style.transition = 'none';
+            volume.querySelector('#volume-tag').style.left = event.pageX - 805 + 'px';
+            myAudio.volume = parseInt(volume.querySelector('#volume-now').style.width) / 130;
+          }
+        }
+      });
+      */
+    };
+  </script>
+</body>
+
+</html>

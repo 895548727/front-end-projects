@@ -1,0 +1,11 @@
+var playList = [{ src: 'static/songs/英语听力 - Lesson 1 Excuse me!.mp3', name: '英语听力 - Lesson 1 Excuse me!', author: '新概念英语', length: '00:40', pic: 'static/imgs/cover.png',totalseconds:40},
+{ src: 'static/songs/英语听力 - Lesson 3 Sorry,sir.mp3', name: '英语听力 - Lesson 3 Sorry,sir.mp3', author: '新概念英语', length: '01:08', pic: 'static/imgs/cover.png',totalseconds:68 },
+{ src: 'static/songs/英语听力 - Lesson 5 Nice to meet you.mp3', name: '英语听力 - Lesson 5 Nice to meet you', author: '新概念英语', length: '01:33', pic: 'static/imgs/cover.png',totalseconds:99 },
+{ src: 'static/songs/英语听力 - Lesson 7 Are you a teacher？.mp3', name: '英语听力 - Lesson 7 Are you a teacher？', author: '新概念英语', length: '01:16', pic: 'static/imgs/cover.png' ,totalseconds:76},
+{ src: 'static/songs/英语听力 - Lesson 9 How are you today？.mp3', name: '英语听力 - Lesson 9 How are you today？', author: '新概念英语', length: '01:01', pic: 'static/imgs/cover.png' ,totalseconds:61},
+{ src: 'static/songs/英语听力 - Lesson 11 Is this your shirt？.mp3', name: '英语听力 - Lesson 11 Is this your shirt？', author: '新概念英语', length: '01:14', pic: 'static/imgs/cover.png',totalseconds:74 },
+{ src: 'static/songs/英语听力 - Lesson 13 A new dress.mp3', name: '英语听力 - Lesson 13 A new dress', author: '新概念英语', length: '01:08', pic: 'static/imgs/cover.png',totalseconds:68},
+{ src: 'static/songs/英语听力 - Lesson 15 Your passports, please.mp3', name: '英语听力 - Lesson 15 Your passports, please', author: '新概念英语', length: '01:27', pic: 'static/imgs/cover.png' ,totalseconds:87},]
+var favorite = [{ src: 'static/songs/英语听力 - Lesson 1 Excuse me!.mp3', name: '英语听力 - Lesson 1 Excuse me!', author: '新概念英语', length: '00:40', pic: 'static/imgs/cover.png',totalseconds:40 },
+{ src: 'static/songs/英语听力 - Lesson 3 Sorry,sir.mp3', name: '英语听力 - Lesson 3 Sorry,sir.mp3', author: '新概念英语', length: '01:08', pic: 'static/imgs/cover.png' ,totalseconds:68},
+{ src: 'static/songs/英语听力 - Lesson 5 Nice to meet you.mp3', name: '英语听力 - Lesson 5 Nice to meet you', author: '新概念英语', length: '01:33', pic: 'static/imgs/cover.png' ,totalseconds:99}]
