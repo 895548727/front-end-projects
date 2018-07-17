@@ -1,0 +1,113 @@
+html, body {
+  margin: 0px;
+  padding: 0px;
+  height: 100%;
+  width: 100%;
+}
+
+#cover {
+  background-color: rgba(0, 0, 0, 0.1);
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0px;
+  z-index: -1;
+}
+
+header {
+  margin-top: 20px;
+}
+
+header h1 {
+  display: flex;
+  margin: 0px;
+  justify-content: space-around;
+}
+
+header h1 button {
+  height: 40px;
+  width: 200px;
+  border: none;
+  outline: none;
+  font-size: 20px;
+  border-radius: 5px;
+  background-color: rgb(9, 221, 9);
+  cursor: pointer;
+}
+
+header h1 button:active {
+  background-color: rgba(9, 211, 9, 0.6);
+}
+
+#outer {
+  position: relative;
+}
+
+#wrapper {
+  width: 500px;
+  height: 160px;
+  background: rgb(255, 255, 255);
+  position: absolute;
+  left: 50%;
+  margin-left: -250px;
+  top: 30px;
+  padding: 20px;
+  font-family: "微软雅黑";
+  font-size: 16px;
+  box-shadow: 0px 0px 10px 0px grey;
+  transition: all 0.25s ease-in-out;
+}
+
+#wrapper p {
+  margin: 0px;
+}
+
+#wrapper header {
+  margin: 0px 0 30px;
+}
+
+#wrapper header p {
+  font-size: 20px;
+}
+
+#wrapper article p {
+  margin-bottom: 5px;
+}
+
+#wrapper footer {
+  position: absolute;
+  bottom: 20px;
+  width: 500px;
+}
+
+#wrapper footer span {
+  display: inline-block;
+  height: 30px;
+  width: 50px;
+  text-align: center;
+  line-height: 30px;
+  cursor: pointer;
+}
+
+#wrapper footer #save {
+  background-color: rgb(43, 43, 230);
+  color: white;
+}
+
+#wrapper footer #nosave {
+  margin-left: 10px;
+}
+
+#wrapper footer #cancel {
+  position: absolute;
+  right: 0px;
+}
+
+#wrapper.hidden {
+  top: 0px;
+  opacity: 0;
+}
+
+.red {
+  color: red;
+}
