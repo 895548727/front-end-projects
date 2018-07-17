@@ -1,2 +1,2 @@
 # front-end-projects
-小项目
+front-end demos
