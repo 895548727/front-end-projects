@@ -1,0 +1,157 @@
+body {
+  background-color: #CDCDCD;
+}
+
+.input {
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #474747;
+  color: white;
+}
+
+.input span {
+  display: inline-block;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 20px;
+  padding: 10px 20px;
+  line-height: 20px;
+  margin-right: 20px;
+  border-right: #fff solid 2px;
+}
+
+.input input {
+  height: 30px;
+  line-height: 30px;
+  width: 300px;
+  padding-left: 10px;
+}
+
+.input button {
+  width: 60px;
+  height: 36px;
+  padding: 0px;
+  border: 0px;
+  outline: none;
+  margin-left: 20px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.input button:active {
+  background-color: grey;
+}
+
+.list {
+  width: 60%;
+  margin: 30px auto;
+  min-width: 400px;
+  /* border: black solid 2px; */
+}
+
+.list .cate-name {
+  height: 60px;
+  line-height: 60px;
+  font-size: 24px;
+  font-weight: 700;
+  position: relative;
+  border-bottom: solid grey 1px;
+}
+
+.list .cate-name .title {
+  display: inline-block;
+}
+
+.list .cate-name .number {
+  display: inline-block;
+  position: absolute;
+  right: 10px;
+  height: 24px;
+  width: 24px;
+  text-align: center;
+  margin-top: 18px;
+  line-height: 24px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  background-color: lightblue;
+}
+
+ul {
+  margin: 10px 0;
+  padding: 0;
+  list-style: none;
+}
+
+ul li {
+  height: 35px;
+  border-left: 5px solid lightblue;
+  background-color: #fff;
+  margin: 10px 0;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  padding-left: 10px;
+  line-height: 35px;
+  font-family: "微软雅黑";
+  display: flex;
+  justify-content: space-around;
+  align-items: center
+}
+
+ul li input {
+  width: 5%;
+  height: 20px;
+  /* margin: 7.5px; */
+  cursor: pointer;
+}
+
+ul li span {
+  display: inline-block;
+  width: 80%;
+  min-width: 350px;
+  height: 24px;
+  line-height: 24px;
+  margin: 4.5px;
+  cursor: text;
+}
+
+ul li .delete {
+  width: 24px;
+  height: 24px;
+  background: url('../imgs/delete.png') center no-repeat;
+  background-size: 24px 24px;
+  cursor: pointer;
+}
+
+.clear {
+  width: 200px;
+  height: 40px;
+  margin: 40px auto;
+}
+
+.clear button {
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0;
+  border: 0;
+  outline: none;
+  cursor: pointer;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  font-weight: 700;
+  background-color: lightblue;
+}
+
+.clear button:active {
+  background-color: lightseagreen;
+}
